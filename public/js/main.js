@@ -1,14 +1,4 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-"use strict";
-
-exports.__esModule = true;
-
-exports.default = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-},{}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -104,7 +94,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 var Vue // late bind
 var map = Object.create(null)
 var shimmed = false
@@ -404,7 +394,7 @@ function format (id) {
   return id.match(/[^\/]+\.vue$/)[0]
 }
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 /**
  * vue-resource v0.7.2
  * https://github.com/vuejs/vue-resource
@@ -2062,7 +2052,7 @@ module.exports =
 
 /***/ }
 /******/ ]);
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 (function (process,global){
 /*!
  * Vue.js v1.0.24
@@ -12095,7 +12085,7 @@ setTimeout(function () {
 
 module.exports = Vue;
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":2}],6:[function(require,module,exports){
+},{"_process":1}],5:[function(require,module,exports){
 var inserted = exports.cache = {}
 
 exports.insert = function (css) {
@@ -12115,31 +12105,78 @@ exports.insert = function (css) {
   return elem
 }
 
+},{}],6:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var GameState = exports.GameState = function GameState(displayQuestion, displayScoreButtons, displayAnswer, displayQuestionTimer) {
+    _classCallCheck(this, GameState);
+
+    this.displayQuestion = displayQuestion;
+    this.displayScoreButtons = displayScoreButtons;
+    this.displayAnswer = displayAnswer;
+    this.displayQuestionTimer = displayQuestionTimer;
+};
+
 },{}],7:[function(require,module,exports){
-var __vueify_style__ = require("vueify-insert-css").insert("\n.blue-box {\n    color:yellow;\n    background: blue;\n    padding:25px 10px;\n    text-align: center;\n    margin-bottom: 16px;\n}\n\n.clue-container {\n    cursor: pointer;\n}\n\n")
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Player = exports.Player = function () {
+    function Player(name, position) {
+        _classCallCheck(this, Player);
+
+        this.name = name;
+        this.position = position;
+        this.bank = 0;
+    }
+
+    _createClass(Player, [{
+        key: "addMoney",
+        value: function addMoney(amount) {
+            this.bank += amount;
+        }
+    }, {
+        key: "loseMoney",
+        value: function loseMoney(amount) {
+            this.bank -= amount;
+        }
+    }]);
+
+    return Player;
+}();
+
+},{}],8:[function(require,module,exports){
+var __vueify_style__ = require("vueify-insert-css").insert("\n\n.player-box {\n    border: 1px solid #aeaeae;\n    margin-bottom: 1.2em;\n    margin-top: 1.2em;\n}\n\n.blue-box {\n    color:yellow;\n    background: blue;\n    padding:25px 10px;\n    text-align: center;\n    margin-bottom: 16px;\n}\n\n.grey-box {\n    color:white;\n    background: grey;\n    padding:25px 10px;\n    text-align: center;\n    margin-bottom: 16px;\n}\n\n.clue-container {\n    cursor: pointer;\n}\n\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+var _GameState = require('../classes/GameState.js');
 
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+var _Player = require('../classes/Player.js');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var gameBoardState = new _GameState.GameState(0, 0, 0, 0);
+var questionAskedState = new _GameState.GameState(1, 0, 0, 0);
+var _buzzerPressed = new _GameState.GameState(1, 0, 0, 1);
+var timesUp = new _GameState.GameState(1, 1, 1, 0);
 
-var GameState = function GameState(displayQuestion, displayTruthyFalsy, displayAnswer) {
-    (0, _classCallCheck3.default)(this, GameState);
-
-    this.displayAnswer = displayAnswer;
-    this.displayTruthyFalsy = displayTruthyFalsy;
-    this.displayQuestion = displayQuestion;
-};
-
-var gameBoardState = new GameState(0, 0, 0);
-var questionAskedState = new GameState(1, 0, 0);
-var buzzerPressed = new GameState(1, 1, 0);
+var playerOne = new _Player.Player('Carter', 1);
+var playerTwo = new _Player.Player('Christina', 2);
 
 exports.default = {
     data: function data() {
@@ -12147,10 +12184,13 @@ exports.default = {
             categories: [],
             currentClue: '',
             currentAnswer: '',
-            showCurrentAnswer: false,
-            displayCurrentQuestion: '',
             readingAnswerTimers: [],
-            displayAccuracyControls: false
+            gameState: gameBoardState,
+            questionTimer: false,
+            questionTimerTimeRemaining: 5,
+            currentQuestionDisplay: '',
+            players: [playerOne, playerTwo],
+            playerThatPressedBuzzer: false
         };
     },
     ready: function ready() {
@@ -12159,10 +12199,19 @@ exports.default = {
 
         $('#clue-modal').on('hidden.bs.modal', function (e) {
             this.currentClue = '';
-            this.showCurrentAnswer = false;
-            this.displayCurrentQuestion = '';
-            this.stopTimers();
-            this.displayAccuracyControls = false;
+            this.stopReadingAnswerTimers();
+        }.bind(this));
+
+        $(document).keyup(function (e) {
+            if (this.gameState = questionAskedState) {
+                if (e.keyCode == 65) {
+                    this.buzzerPressed(playerOne);
+                }
+
+                if (e.keyCode == 186) {
+                    this.buzzerPressed(playerTwo);
+                }
+            }
         }.bind(this));
     },
 
@@ -12227,24 +12276,16 @@ exports.default = {
                 return;
             }
 
+            this.gameState = questionAskedState;
             this.currentClue = clue;
             this.readOutAnswer();
             $('#clue-modal').modal({ show: true });
         },
-        checkAnswer: function checkAnswer() {
-
-            if (this.showCurrentAnswer) {
-                this.backToTheGame();
-            }
-            this.showCurrentAnswer = true;
-            this.currentClue.answered = true;
-        },
-        guessTheAnswer: function guessTheAnswer() {
-            this.stopTimers();
-            this.displayCurrentQuestion = this.currentClue.question;
-            this.displayAccuracyControls = true;
-        },
         backToTheGame: function backToTheGame() {
+            this.gameState = gameBoardState;
+            this.currentClue = false;
+            this.currentQuestionDisplay = '';
+            this.playerThatPressedBuzzer = false;
             $('#clue-modal').modal('hide');
         },
         readOutAnswer: function readOutAnswer() {
@@ -12252,28 +12293,59 @@ exports.default = {
             this.readingAnswerOkay = true;
             for (var i = 0; i < words.length; i++) {
                 var timer = setTimeout(function () {
-                    this.displayCurrentQuestion += words.shift();
+                    this.currentQuestionDisplay += words.shift();
                 }.bind(this), 100 * i);
                 this.readingAnswerTimers.push(timer);
             }
         },
-        stopTimers: function stopTimers() {
+        stopReadingAnswerTimers: function stopReadingAnswerTimers() {
             this.readingAnswerTimers.forEach(function (timer) {
                 clearTimeout(timer);
             });
             this.readingAnswerTimers = [];
+        },
+        buzzerPressed: function buzzerPressed(player) {
+            this.playerThatPressedBuzzer = player;
+            this.gameState = _buzzerPressed;
+            this.stopReadingAnswerTimers();
+            this.currentQuestionDisplay = this.currentClue.question;
+            this.startQuestionTimer();
+        },
+        playerWasCorrect: function playerWasCorrect() {
+            this.playerThatPressedBuzzer.addMoney(this.currentClue.value);
+            this.currentClue.answered = true;
+            this.backToTheGame();
+        },
+        playerWasIncorrect: function playerWasIncorrect() {
+            this.playerThatPressedBuzzer.loseMoney(this.currentClue.value);
+            this.currentClue.answered = true;
+            this.backToTheGame();
+        },
+        startQuestionTimer: function startQuestionTimer() {
+
+            if (this.questionTimerTimeRemaining <= 0) {
+                clearTimeout(this.questionTimer);
+                this.questionTimer = false;
+                this.gameState = timesUp;
+                this.questionTimerTimeRemaining = 5;
+            } else {
+                this.questionTimer = setTimeout(function () {
+                    this.questionTimerTimeRemaining -= 1;
+                    this.startQuestionTimer();
+                }.bind(this), 900);
+            }
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"row\">\n  <div class=\"col-sm-2\" v-for=\"category in categories\">\n    <div class=\"category-container\">\n        <div class=\"blue-box\">\n          <h5>{{category.title}}</h5>\n        </div>\n        <div class=\"clue-container blue-box\" v-for=\"clue in category.clues | orderBy 'value'\" @click=\"askQuestionForClue(clue)\">\n            <template v-if=\"clue.answered\">\n                <h5><s>${{clue.value}}</s></h5>\n            </template>\n            <template v-else=\"\">\n                <h5>${{clue.value}}</h5>\n            </template>\n        </div>\n    </div>\n  </div>\n</div>\n<div class=\"modal fade\" id=\"clue-modal\" tabindex=\"-1\" role=\"dialog\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span></button>\n                <h4 class=\"modal-title\" v-if=\"currentClue\">{{currentClue.category.title}} for ${{currentClue.value}}</h4>\n            </div>\n            <div class=\"modal-body\">\n                <p>{{ displayCurrentQuestion }}</p>\n                <p v-if=\"showCurrentAnswer\"><em>{{currentClue.answer}}</em></p>\n                </div>\n            <div class=\"modal-footer\">\n                <template v-if=\"displayAccuracyControls\">\n                    <p>{{currentClue.answer}}</p>\n                    <div class=\"btn-group\">\n\n                    </div>\n                </template>\n                <button v-else=\"\" @click=\"guessTheAnswer()\" type=\"button\" class=\"btn btn-primary\">I know! I know!</button>\n            </div>\n        </div><!-- /.modal-content -->\n    </div><!-- /.modal-dialog -->\n</div><!-- /.modal -->\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"row\">\n    <div class=\"col-sm-3 text-center player-box\" v-for=\"player in players\">\n        <h4>\n            {{player.name}}<br>\n            <small>{{player.bank}}</small>\n        </h4>\n    </div>\n</div>\n<div class=\"row\">\n  <div class=\"col-sm-2\" v-for=\"category in categories\">\n    <div class=\"category-container\">\n        <div class=\"blue-box\">\n          <h5>{{category.title}}</h5>\n        </div>\n        <div class=\"clue-container\" v-for=\"clue in category.clues | orderBy 'value'\" v-bind:class=\"{'blue-box' : ! clue.answered, 'grey-box' : clue.answered}\" @click=\"askQuestionForClue(clue)\">\n            <template v-if=\"clue.answered\">\n                <h5><s>${{clue.value}}</s></h5>\n            </template>\n            <template v-else=\"\">\n                <h5>${{clue.value}}</h5>\n            </template>\n        </div>\n    </div>\n  </div>\n</div>\n<div class=\"modal fade\" id=\"clue-modal\" tabindex=\"-1\" role=\"dialog\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span></button>\n                <h4 class=\"modal-title\" v-if=\"currentClue\">{{currentClue.category.title}} for ${{currentClue.value}}</h4>\n            </div>\n            <div class=\"modal-body\">\n                <p v-if=\"gameState.displayQuestion\">{{ currentQuestionDisplay }}</p>\n                <p v-if=\"gameState.displayAnswer\"><em v-html=\"currentClue.answer\"></em></p>\n                </div>\n            <div class=\"modal-footer\">\n                <template v-if=\"gameState.displayQuestionTimer\">\n                    {{questionTimerTimeRemaining}}\n                </template>\n                <template v-if=\"gameState.displayScoreButtons\">\n                    <div class=\"btn-group\">\n                        <button class=\"btn btn-success\" @click=\"playerWasCorrect()\">\n                            {{playerThatPressedBuzzer.name}} was correct!\n                        </button>\n                        <button class=\"btn btn-default\" @click=\"playerWasIncorrect()\">\n                            <span class=\"text-danger\">\n                                {{playerThatPressedBuzzer.name}} was incorrect :(\n                            </span>\n                        </button>\n                    </div>\n                </template>\n                <template v-else=\"\">\n                <button v-for=\"player in players\" @click=\"buzzerPressed(player)\" type=\"button\" class=\"btn btn-primary\">{{player.name}}</button>\n                </template>\n                \n            </div>\n        </div><!-- /.modal-content -->\n    </div><!-- /.modal-dialog -->\n</div><!-- /.modal -->\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   var id = "/Users/cfort/Code/jeopardy/resources/assets/js/components/Game.vue"
   module.hot.dispose(function () {
-    require("vueify-insert-css").cache["\n.blue-box {\n    color:yellow;\n    background: blue;\n    padding:25px 10px;\n    text-align: center;\n    margin-bottom: 16px;\n}\n\n.clue-container {\n    cursor: pointer;\n}\n\n"] = false
+    require("vueify-insert-css").cache["\n\n.player-box {\n    border: 1px solid #aeaeae;\n    margin-bottom: 1.2em;\n    margin-top: 1.2em;\n}\n\n.blue-box {\n    color:yellow;\n    background: blue;\n    padding:25px 10px;\n    text-align: center;\n    margin-bottom: 16px;\n}\n\n.grey-box {\n    color:white;\n    background: grey;\n    padding:25px 10px;\n    text-align: center;\n    margin-bottom: 16px;\n}\n\n.clue-container {\n    cursor: pointer;\n}\n\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
@@ -12282,7 +12354,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"babel-runtime/helpers/classCallCheck":1,"vue":5,"vue-hot-reload-api":3,"vueify-insert-css":6}],8:[function(require,module,exports){
+},{"../classes/GameState.js":6,"../classes/Player.js":7,"vue":4,"vue-hot-reload-api":2,"vueify-insert-css":5}],9:[function(require,module,exports){
 'use strict';
 
 var _vue = require('vue');
@@ -12303,6 +12375,6 @@ new _vue2.default({
   components: { Game: _Game2.default }
 });
 
-},{"./components/Game.vue":7,"vue":5,"vue-resource":4}]},{},[8]);
+},{"./components/Game.vue":8,"vue":4,"vue-resource":3}]},{},[9]);
 
 //# sourceMappingURL=main.js.map
